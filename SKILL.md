@@ -19,6 +19,8 @@ get Claude to the result they actually want. Then explain briefly what you chang
   shape the rewrite as it describes, sized to the project: every project gets a spec, a first milestone,
   user-level testing and checks for its specific risks; large or multi-session ones add the bookkeeping
   (feature file, progress file, per-feature commits, review per milestone).
+- **Visual work** (a page, screen, poster, slide, game or chart)? Also read `references/visual-design.md`: ask for a
+  distinctive design that fits the context, and make the finish line rendering it and checking it at phone and desktop size.
 - **Inside a project folder?** Take a quick look (a few reads or greps) so you can name real files, commands and patterns.
 - **Already strong** (clear goal, specifics, constraints)? Say so, keep their wording verbatim, and append only
   what's missing, usually the "Done when:" line. Skip to step 4.
