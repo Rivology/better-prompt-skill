@@ -26,4 +26,7 @@ The "Done when" for visual work asks Claude to render the result and look at it 
 - the layout **reflows** for the phone (it doesn't just shrink), and all text is legible at that size;
 - the key information or action is visible without scrolling;
 - nothing overflows, overlaps or gets cut off;
-- for anything meant to print, it also fits its page size.
+- for anything meant to print, it also fits its page size;
+- it looks finished: no "draft" or "edit me" badges and no `[placeholder]` text on the visible page. Where a detail
+  is missing, Claude writes a sensible version into the page, keeps notes for the user in code comments, and lists
+  what to confirm or replace in its report.
