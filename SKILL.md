@@ -35,8 +35,9 @@ get Claude to the result they actually want. Then explain briefly what you chang
     `[PLACEHOLDER: …]`, never invented.
   - For code and data, facts in the repo or files (test command, paths, patterns, column names) are not
     placeholders: tell Claude to find them and report what it found.
-  - For code, a behaviour detail only the user knows (a time or size limit, a file, command or function name, how
-    it's run, what happens on bad input) is a `[PLACEHOLDER: …]`, not an assumption: a wrong guess there ships as a
+  - For code and pages, a behaviour detail only the user knows (a time or size limit, a file, command or function
+    name, how it's run, whether it must work offline with no CDN libraries, web fonts or online services, what
+    happens on bad input) is a `[PLACEHOLDER: …]`, not an assumption: a wrong guess there ships as a
     bug. Include only the ones this task's behaviour depends on.
 - **Route:** if it would need more than ~5 placeholders, or the user clearly hasn't decided what they want,
   write an interview prompt instead: "Interview me with multiple-choice questions until you could write the
