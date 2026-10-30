@@ -1,7 +1,6 @@
 ---
 name: better-prompt
 description: Turn a rough prompt into the strongest prompt for getting Claude to reach that goal, using Anthropic's current prompting best practices. Use when the user says "improve/upgrade/rewrite/optimize this prompt", "make this a better prompt", "/better-prompt", or pastes a prompt and asks how to get better results from Claude.
-argument-hint: <your rough prompt>
 ---
 
 # Better Prompt
