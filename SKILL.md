@@ -20,6 +20,9 @@ get Claude to the result they actually want. Then explain briefly what you chang
   (feature file, progress file, per-feature commits, review per milestone).
 - **Visual work** (a page, screen, poster, slide, game or chart)? Also read `references/visual-design.md`: ask for a
   distinctive design that fits the context, and make the finish line rendering it and checking it at phone and desktop size.
+- **Meant to impress** ("the most impressive", "really cool", "stunning", to wow people or share)? Also read
+  `references/ambitious-builds.md`: a high bar instead of a first milestone, a check that decides when it's done,
+  room to decide without asking, and a working build at every step.
 - **Inside a project folder?** Take a quick look (a few reads or greps) so you can name real files, commands and patterns.
 - **Already strong** (clear goal, specifics, constraints)? Say so, keep their wording verbatim, and append only
   what's missing, usually the "Done when:" line. Skip to step 4.
