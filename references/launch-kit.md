@@ -1,4 +1,4 @@
-# Launch kit for ambitious builds (candidate, 2026-11-03)
+# Launch kit for ambitious builds
 
 Use this together with `ambitious-builds.md` when the user wants something at the level of the best public
 work and it will run in Claude Code. The best public builds didn't come from clever wording. They came from:
@@ -7,8 +7,8 @@ work and it will run in Claude Code. The best public builds didn't come from cle
 - the right source material or technique;
 - hours of resumable work.
 
-So the rewrite hands over a whole launch kit: the prompt carries all of it, and the reply adds one line on how to
-launch. On claude.ai, keep sections 1, 2 and 5, with review done by Claude itself between passes, and drop the rest.
+So the rewrite hands over a whole launch kit: the prompt carries all of it, and the reply adds a short note on how to
+launch it. On claude.ai, keep sections 1, 2 and 5, with review done by Claude itself between passes, and drop the rest.
 
 ## The prompt includes
 
@@ -51,5 +51,10 @@ launch. On claude.ai, keep sections 1, 2 and 5, with review done by Claude itsel
    carries on with what doesn't depend on it.
 
 ## The reply adds
-- One line on launching it: "This is built to run for hours: say *start it* and I'll launch it as its own
-  session." Then a pointer to `PROGRESS.md`.
+- A short note on launching it, with the effort and the cost: "This is built to run for hours at max effort: say
+  *start it* and I'll launch it as its own session at max effort. Runs like this have used about 6–9M tokens over
+  about 4 hours. For a cheaper run, say *single build* and I'll rewrite it without the launch kit as one max-effort
+  session (about 1.5M tokens and 2 hours in testing, scoring about a point lower)." Then a pointer to `PROGRESS.md`.
+- Launch it at max effort. If you can't set that for the new session, ask the user to switch it to max before it
+  starts. In the 2026-11-03 effort check, max effort explained most of the gain: the same single-build prompt scored
+  2.5 points higher at max than at medium.
