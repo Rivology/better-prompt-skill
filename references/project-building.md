@@ -25,6 +25,7 @@ without making it better.
    behaviors, in a few lines.
 2. **Stack and constraints.** New project: a simple, well-known stack (assumed, marked as such) unless the user
    named one. Existing codebase: "follow the patterns already in the repo; no new dependencies without asking."
+   For a large or long-running project, also say whose code it is (the wording is in `models.md`).
 3. **First milestone and scope.** Name the first working version and what's out of scope for now. Use
    "be ambitious: …" only when the user wants the full version.
 4. **Test like a user.** For a UI, run it and check it in the browser (screenshots) or with `/verify`; for a CLI,
@@ -50,8 +51,10 @@ That's the whole prompt for a small project: no feature file, progress file or p
 9. **Progress file** (done, next, known issues) and a one-line run command, so a new session can resume.
 10. **Independent review** of the whole milestone: a fresh subagent or `/code-review` against SPEC.md,
    "report gaps that affect correctness and skip style".
-11. **/goal** for long runs: "the MVP features in features.json all pass, the app runs with one command,
-    and a review against SPEC.md found no correctness gaps."
+11. **A finish line for long runs**, written as the prompt's "Done when": "the MVP features in features.json all
+    pass, the app runs with one command, and a review against SPEC.md found no correctness gaps." In Claude Code
+    the user can also type it as `/goal <condition>`; give that line in the reply, outside the prompt, because a
+    slash command inside a prompt's text does nothing.
 
 ## Tools worth naming in the prompt (only when they help)
 

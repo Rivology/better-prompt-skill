@@ -1,10 +1,13 @@
-# Prompting Claude well (distilled; last refreshed 2026-10-28)
+# Prompting Claude well (distilled; last refreshed 2026-11-09)
 
 Sources: Anthropic's "Best practices for Claude Code" (code.claude.com/docs/en/best-practices),
 Anthropic's "Prompting best practices" for current models
 (platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices),
 and community guides (Ilia Karelin, "How to Prompt Like an Anthropic Engineer"; Austin Marchese's
 video "The ONLY 4 Things You Need To Prompt Like An Anthropic Engineer").
+
+Everything in this file holds on every current Claude model. Advice that differs by model (effort level,
+delegation, budgets, stopping early, code ownership) is in `models.md` and nowhere else.
 
 ## The core idea
 
@@ -73,14 +76,38 @@ citations, and say how recent the information must be.
 
 - ALL CAPS / IMPORTANT / NEVER everywhere → current models follow plain wording; emphasis makes them over-apply the rule.
 - "think hard", "be thorough" → effort level is the real control (`ultrathink` still works for one turn).
-- "don't be lazy, keep going until done" → causes over-work; give a check to pass instead.
+- "think step by step", "show your reasoning" → current models think on their own, and a prompt that asks for the
+  reasoning itself in the reply can be refused. Ask for a short explanation of the answer or a summary of what was
+  done instead.
+- "don't be lazy, keep going until done" on an ordinary task → causes over-work; give a check to pass instead.
+  Long and unattended runs are the exception: see the next section.
 - Describing your whole file layout → Claude reads the repo itself; only write what isn't in there.
+
+## Long and agentic work (only for a long run; a short task needs none of this)
+
+These apply when Claude will work for a long stretch on its own: a multi-hour build, a multi-step change in a
+codebase, an unattended run, a system prompt for an agent. Add only what the task needs.
+
+- **Finishing.** A check to pass comes first. For a long or unattended run, also add the finishing paragraph from
+  `models.md`: keep working through ordinary obstacles (an error, a timeout, a failing tool), and stop only for the
+  user, a risky step or something deliberately off-limits.
+- **Ask-first rules name the exact actions.** "Ask before deleting files, pushing, or sending anything outside this
+  machine" works. "Be careful" and "never touch X" get over-applied or block an approved step. Say which steps need
+  no go-ahead (reading, local edits, retries), and write "get my go-ahead before X" instead of "never X". A rule
+  with its reason is followed better than a bare rule.
+- **Whose code it is.** Say whether the code is the user's, to be changed as little as possible, or Claude's to
+  shape. The wording is in `models.md`.
+- **A final report for someone who hasn't seen the work.** Ask for the result and what the user must do first, then
+  what was checked and what wasn't, in plain full sentences, with no labels invented along the way.
+- **Updates** only when the user will watch: a line before starting and a brief update every few steps.
+- **Effort, limits and subagents** are set per model: `models.md`.
 
 ## Making "done" stick
 
-Ask for evidence (the command and its output, a screenshot) rather than "it works". For long runs, put the
-check in a `/goal` condition: one measurable end state, how Claude proves it, and what must not change on the
-way. For building whole apps or features, see `project-building.md`.
+Ask for evidence (the command and its output, a screenshot) rather than "it works". For long runs in Claude
+Code, the user can also type the check as a `/goal` condition (one measurable end state, how Claude proves it, and
+what must not change on the way). Give that line in the reply: inside a prompt's text a slash command does nothing.
+For building whole apps or features, see `project-building.md`.
 
 ## Steering once it's running
 

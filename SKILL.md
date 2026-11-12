@@ -18,12 +18,22 @@ get Claude to the result they actually want. Then explain briefly what you chang
   shape the rewrite as it describes, sized to the project: every project gets a spec, a first milestone,
   user-level testing and checks for its specific risks; large or multi-session ones add the bookkeeping
   (feature file, progress file, per-feature commits, review per milestone).
+- **A serious project** (it will be put online, has several parts, spans several sessions, or is meant to be
+  professional-level)? Also read `references/project-framework.md` and carry the prompt through its three stages
+  (planning, executing, deploying), sized as it says: a small site gets a few lines, not the framework.
 - **Visual work** (a page, screen, poster, slide, game or chart)? Also read `references/visual-design.md`: ask for a
   distinctive design that fits the context, and make the finish line rendering it and checking it at phone and desktop size.
-- **Meant to impress** ("the most impressive", "really cool", "stunning", to wow people or share)? Also read
-  `references/ambitious-builds.md`: a high bar instead of a first milestone, a check that decides when it's done,
-  room to decide without asking, and a working build at every step. When it will run in Claude Code, also read
-  `references/launch-kit.md` and hand over the whole launch kit with the prompt.
+- **Meant to impress** (they want the result to stand out, not just work: the best or top-tier, expert
+  level, as good as a named example, perfect, to impress or wow people or share, beating anyone or anything else; any
+  wording counts, judged by intent)? Also read `references/ambitious-builds.md`: a high bar instead of a first
+  milestone, a check that decides when it's done, room to decide without asking, and a working build at every step.
+  When it will run in Claude Code, also read `references/launch-kit.md` and hand over the whole launch kit with the
+  prompt. A request that is only large, long or multi-part, a fix, or a question doesn't count.
+- **Long or agentic work, or a named model** (a multi-hour build, a multi-step change in a codebase, an unattended
+  run, a system prompt for an agent)? Also read `references/models.md`: work out which model will run the prompt, and
+  take effort, limits, delegation, finishing and code ownership from that model's section. When the model isn't
+  known, use its section that is safe on all of them. For a short one-shot task (an email, an explanation, a page,
+  a small fix), don't open it and change nothing.
 - **Inside a project folder?** Take a quick look (a few reads or greps) so you can name real files, commands and patterns.
 - **Already strong** (clear goal, specifics, constraints)? Say so, keep their wording verbatim, and append only
   what's missing, usually the "Done when:" line. Skip to step 4.
@@ -55,7 +65,8 @@ Use only the items that help *this* task:
 2. **Specifics Claude can't find:** files, the error or symptom, links, examples, data.
 3. **Scope:** "be ambitious: …" listing the extras wanted, or "keep it minimal: …".
 4. **Preferences and constraints**, stated positively, with the reason.
-5. **Output:** format, length, where to save it, what to report back.
+5. **Output:** format, length, where to save it, what to report back. After a long run, the report is for someone
+   who hasn't seen the work.
 6. **Process steps** only where order matters (e.g. "reproduce with a failing test first, then fix").
 7. **End with "Done when:"**, a concrete check plus the evidence to show, matched to the task: code → tests,
    build or a screenshot vs. the mockup; research → claims cited, dated, cross-checked; writing → length,
@@ -64,7 +75,7 @@ Use only the items that help *this* task:
    step at a time. Keep the user's own "Done when" if they gave one.
 
 Style: plain sentences in the user's voice, as a message they would send. No ALL CAPS, "IMPORTANT", "think
-step by step" or "don't be lazy". Right-size it: a small task gets a few sentences, and only long multi-part
+step by step", "show your reasoning" or "don't be lazy". Right-size it: a small task gets a few sentences, and only long multi-part
 tasks get headings or XML tags. Long pasted material goes first, the request last. Keep the user's facts exactly.
 
 ## 4. Reply
@@ -73,7 +84,8 @@ tasks get headings or XML tags. Long pasted material goes first, the request las
 2. **What changed:** 3–6 short bullets, each naming the technique and why it helps here.
 3. **Fill in / assumptions** (only if any): the placeholders and the defaults you chose.
 4. One line: "Want me to run this prompt now?"
-   On yes, carry out the improved prompt as the task.
+   On yes, carry out the improved prompt as the task. (A launch-kit prompt gets the launch note from
+   `references/launch-kit.md` instead of this line.)
 
 ## Example
 
