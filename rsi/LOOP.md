@@ -25,7 +25,9 @@ about 150 lines.
 4. `L blind <run> --judges 2 --batch 41` writes one sealed folder per judge batch under `<run>/judging/`. Give
    each folder to one judge, which reads only `judge.md`, `checks.md` and `batch.md` there and writes
    `verdict.json` next to them. Judges are told to open only their folder, never the run folder that holds the unblinding key.
-5. `L score <run> --hypothesis "..."` prints KEEP or REJECT with its reasons.
+5. `L pairs <run>` writes two pairwise folders under `<run>/pairjudging/`. Give each to a judge that has seen
+   neither `checks.md` nor the change. It reads `rubric.md` and `batch.md` and writes `verdict.json`.
+6. `L score <run> --hypothesis "..."` prints KEEP or REJECT with its reasons.
 
 ## 4. Decide and publish
 - **KEEP:** copy the candidate over the live skill, bump `VERSION`, and open a pull request on a `loop/v<N>`

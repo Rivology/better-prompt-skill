@@ -33,11 +33,12 @@ correction [BP].
 These are the riskiest prompts the user sends, so they get the most structure:
 1. **Diagnose before building:** what is wrong today, in the user's words and in evidence (logs, the user's
    complaints, a run of the current thing). The fix aims at that, not at a general wish for "better".
-2. **Settle the user's choices first** (see SKILL.md step 2): the deliverable, the unit or mode, how much at once.
+2. **Settle the user's choices** (see SKILL.md step 2): ask about the ones that are really open; for the ones the
+   user handed over, state the reading and make the first step one that would show a wrong reading early.
 3. **Protect what works:** record today's behaviour, change it in steps that each leave it usable, one feature at a
    time, and finish with the old main path checked end to end.
-4. **Cap the first version.** "Ambitious" sets the bar for quality, not the amount shipped at once. A small first
-   version the user tries, then the next.
+4. **Ship in passes.** "Ambitious" can mean the full version, but it arrives in passes that each leave the product
+   usable and checked, so a wrong turn costs one pass, not the app.
 
 ## Prompts that build or overhaul a feedback / self-improvement loop
 
@@ -51,16 +52,7 @@ A loop improves only what it measures, so the prompt asks for the measurement fi
 - One number that matters, tracked per version on real use (for example the share of uses the user had to correct).
 - Read the transcripts behind a score before trusting it.
 
-## Prompts for work inside a Claude project (coordinator, threads, shared memory)
+## Prompts for work inside a Claude project
 
-When the prompt sets up or runs inside a project where a coordinator starts threads and they share memory:
-- **One goal per thread:** split the work into threads by goal, each with its own finish line. Say which threads
-  depend on which, so a thread can tell another when its part is done.
-- **Shared memory holds what a new thread would otherwise have to ask:** standing preferences, decisions and where
-  things live. It doesn't hold progress, which belongs in the thread's checklist and files.
-- **Files that outlive a thread** (plans, reports, private data) go in the project's shared files, never in a public repo.
-- **Checkpoints for the person:** a checklist they can glance at, one decision card per real choice (with a
-  recommended option), and a short reply only for a result, a blocker or a question. Irreversible steps (merging,
-  publishing, deleting, messaging others) wait for their word.
-- **Long runs** follow the project's saved rule on where they run (their computer, CI, or the cloud), so a thread
-  nobody is watching does the right thing.
+See `claude-projects.md`: threads, decision cards, scheduled and event-driven work, the person's computer and
+project memory.

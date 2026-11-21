@@ -40,7 +40,11 @@ real use ──log──▶ uses ──label (weekly, from transcripts)──▶
    - no universal check falls by more than 10 points;
    - guard cases get no worse by more than 0.05;
    - B's rewrites are at most 1.3 times as long (a guard against judges rewarding length);
-   - a check counts only where the two judges agree at least 70% of the time.
+   - a check counts only where the two judges agree at least 70% of the time;
+   - **independent guard:** two more judges, who never see `checks.md`, compare A and B side by side on the
+     holistic rubric (`briefs/pairwise_rubric.md`, written for the first loop), each seeing the pair in the other
+     order. If they prefer A (mean below 0, p ≤ 0.10), the change is rejected. This rule was added on 2026-11-21,
+     after it caught v22, which passed the checks but lost to v21 on this guard (see `CHANGELOG.md`).
 6. **North star** (`loop.py northstar`): the share of labelled real uses that went badly, per version. This is the
    number that should fall over time. Everything else is a stand-in for it.
 
@@ -66,5 +70,8 @@ weekly gate.
 - `briefs/`: rewriter, judge and labeler briefs.
 - `LOOP.md`: how to run a cycle by hand or from the weekly task.
 - `scheduled/`: proposed prompts for the weekly and monthly tasks.
+- `bench/`: synthetic request sets for side-by-side checks: the first loop's project and showcase tests, and 10
+  requests set inside a Claude project, written by an independent agent.
+- `briefs/pairwise_rubric.md`: the independent judges' rubric, written for the first loop.
 - Private, never committed: `$BP_DATA/` (default `~/better-prompt-runs/rsi2/`), holding `uses.jsonl`,
   `labels.jsonl`, `cases.jsonl`, `history.jsonl` and `runs/`.

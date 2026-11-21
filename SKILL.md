@@ -34,13 +34,6 @@ get Claude to the result they actually want. Then explain briefly what you chang
   take effort, limits, delegation, finishing and code ownership from that model's section. When the model isn't
   known, use its section that is safe on all of them. For a short one-shot task (an email, an explanation, a page,
   a small fix), don't open it and change nothing.
-- **Changing something that already works** (an overhaul, revamp or new feature in an app, deck, document or system
-  the user already uses)? The rewrite protects it: start from what is wrong with it now (ask, or diagnose first),
-  record how it behaves today, change it in steps that each leave it usable, cap how much changes at once, and end
-  by checking that its main path still works. An overhaul that breaks a working product is the costliest failure.
-- **Runs in Claude Code or a Claude project, and is long or agentic** (a multi-session build, an overhaul, a
-  feedback or self-improvement loop, work split across threads)? Also read `references/claude-code.md`: pick the
-  few Claude Code methods that fit this task and say in the prompt why each one is there.
 - **Inside a project folder?** Take a quick look (a few reads or greps) so you can name real files, commands and patterns.
 - **Already strong** (clear goal, specifics, constraints)? Say so, keep their wording verbatim, and append only
   what's missing, usually the "Done when:" line. Skip to step 4.
@@ -49,14 +42,6 @@ get Claude to the result they actually want. Then explain briefly what you chang
 
 - **Decisive and unguessable** (it changes what gets built: platform, audience, minimal vs. full): ask with
   AskUserQuestion, once, at most 3 multiple-choice questions, recommended option first. Then rewrite with the answers.
-  These choices are the user's, and rewrites most often get them wrong by deciding silently:
-  - **the deliverable:** a list, advice or a plan stays that; a follow-up keeps the deliverable of the request it
-    refines; "make slides for X" is new slides, not edits to the existing deck;
-  - **the unit or mode:** per topic or per course, conversation or lecture, daily schedule or on demand, when the
-    words allow either;
-  - **how much at once:** the first version of a big feature is small and capped unless the user said otherwise.
-  When you can't ask, the prompt tells Claude to ask these first (or to offer 2–3 options and stop) instead of
-  choosing.
 - **Everything else:**
   - A default for something unstated (a priority, target, audience, threshold) goes inline as
     `(assumed: …; change if not)`, never as plain fact.
@@ -83,9 +68,7 @@ Use only the items that help *this* task:
 5. **Output:** format, length, where to save it, what to report back. After a long run, the report is for someone
    who hasn't seen the work.
 6. **Process steps** only where order matters (e.g. "reproduce with a failing test first, then fix").
-7. **A named bar or reference** ("like X", "same calibre as Y"): make it the finish line as a side-by-side
-   comparison with that reference, at the same size, naming the qualities that must match.
-8. **End with "Done when:"**, a concrete check plus the evidence to show, matched to the task: code → tests,
+7. **End with "Done when:"**, a concrete check plus the evidence to show, matched to the task: code → tests,
    build or a screenshot vs. the mockup; research → claims cited, dated, cross-checked; writing → length,
    audience and tone met, with a self-review against the goal; studying → a score on fresh problems without
    hints; data → numbers that reconcile with a known total. Tutoring and brainstorming are interactive, one

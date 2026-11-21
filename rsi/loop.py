@@ -284,17 +284,73 @@ def cmd_score(a):
             reasons.append(f"{g} dropped {ra:.2f}->{rb:.2f}")
     if guard_diffs and statistics.mean(guard_diffs) < -GUARD_DROP_MAX:
         reasons.append(f"guard cases worse ({statistics.mean(guard_diffs):+.3f})")
+    pr = pair_result(run) if (run / "pair_key.json").exists() else None
+    if pr is None:
+        reasons.append("no independent pairwise verdicts (run `pairs` and two judges)")
+    elif pr["mean"] < 0 and pr["p_worse"] <= 0.10:
+        reasons.append(f"independent pairwise judges prefer A ({pr['mean']:+.2f}/10, p={pr['p_worse']})")
     if lens["B"] > LENGTH_RATIO_MAX * lens["A"]:
         reasons.append(f"rewrites {lens['B'] / lens['A']:.2f}x longer")
     decision = "KEEP" if not reasons else "REJECT"
     out = {"run": run.name, "time": now(), "decision": decision, "reasons": reasons, "mean_diff": round(mean_d, 3),
            "p": round(p, 4), "n_cases": len(alld), "check_rates_A_B": check_rates, "agreement": agree_rate,
-           "trusted_checks": sorted(trusted), "median_len_A_B": lens, "per_case": rows,
+           "trusted_checks": sorted(trusted), "median_len_A_B": lens, "pairwise": pr, "per_case": rows,
            "sides": json.loads((run / "sides.json").read_text())}
     (run / "result.json").write_text(json.dumps(out, indent=1))
     if not a.no_record:
         append(HISTORY, {k: out[k] for k in ("run", "time", "decision", "reasons", "mean_diff", "p", "n_cases")} | {"hypothesis": a.hypothesis})
     print(json.dumps(out, indent=1))
+
+
+# ---------- independent guard: holistic pairwise judging ----------
+def cmd_pairs(a):
+    """Pairwise batches for judges who never see checks.md: each pair shown in opposite orders to the two judges,
+    so position bias cancels. Uses the old loop's holistic rubric (briefs/pairwise_rubric.md)."""
+    run = Path(a.run)
+    key = json.loads((run / "key.json").read_text())
+    cases = {c["id"]: c for c in json.loads((run / "cases.json").read_text())}
+    by = {}
+    for rid, k in key.items():  # one pair per case and draw: A's k-th rewrite against B's k-th
+        by.setdefault((k["case"], k["k"]), {})[k["side"]] = rid
+    rng = random.Random(a.seed)
+    items = sorted(by.items())
+    rng.shuffle(items)
+    pk = {}
+    for j in (1, 2):
+        parts = []
+        for i, ((cid, _k), s) in enumerate(items):
+            pid = "p%03d" % i
+            if j == 1:
+                pk[pid] = {"case": cid, "first_j1": "A" if rng.random() < .5 else "B"}
+            first = pk[pid]["first_j1"] if j == 1 else ("B" if pk[pid]["first_j1"] == "A" else "A")
+            second = "B" if first == "A" else "A"
+            c = cases[cid]
+            parts.append(f"## {pid}\n\n**Original rough prompt:**\n{c['rough']}\n\n**Situation:** {c.get('situation') or 'not recorded'}"
+                         f"\n\n### Response 1\n\n{(run / 'rewrites' / (s[first] + '.md')).read_text()}"
+                         f"\n\n### Response 2\n\n{(run / 'rewrites' / (s[second] + '.md')).read_text()}\n")
+        d = run / "pairjudging" / f"j{j}"
+        d.mkdir(parents=True, exist_ok=True)
+        (d / "batch.md").write_text("\n---\n".join(parts))
+        shutil.copy(REPO / "rsi/briefs/pairwise_rubric.md", d / "rubric.md")
+    (run / "pair_key.json").write_text(json.dumps(pk, indent=1))
+    print(f"{len(pk)} pairs; give each {run / 'pairjudging'}/j<N> folder to one judge (rubric.md, batch.md -> verdict.json)")
+
+
+def pair_result(run):
+    pk = json.loads((run / "pair_key.json").read_text())
+    per = {}
+    for j in (1, 2):
+        f = run / "pairjudging" / f"j{j}" / "verdict.json"
+        if not f.exists():
+            continue
+        for pid, x in json.loads(f.read_text()).items():
+            first = pk[pid]["first_j1"] if j == 1 else ("B" if pk[pid]["first_j1"] == "A" else "A")
+            sa, sb = (x["scores1"], x["scores2"]) if first == "A" else (x["scores2"], x["scores1"])
+            per.setdefault(pid, []).append(statistics.mean(sb.values()) - statistics.mean(sa.values()))
+    diffs = [statistics.mean(v) for v in per.values()]
+    if not diffs:
+        return None
+    return {"mean": round(statistics.mean(diffs), 3), "p_worse": round(perm_p([-d for d in diffs]), 4), "n": len(diffs)}
 
 
 def cmd_lint(a):
@@ -336,6 +392,7 @@ def main():
     s.add_argument("--batch", type=int, default=12); s.add_argument("--seed", type=int, default=11)
     s = sub.add_parser("score"); s.add_argument("run"); s.add_argument("--hypothesis", default=""); s.add_argument("--no-record", action="store_true")
     s.add_argument("--split", choices=["train", "heldout", "all"], default="heldout")
+    s = sub.add_parser("pairs"); s.add_argument("run"); s.add_argument("--seed", type=int, default=42)
     s = sub.add_parser("lint"); s.add_argument("files", nargs="+")
     a = p.parse_args()
     globals()["cmd_" + a.cmd.replace("-", "_")](a)

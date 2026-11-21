@@ -13,7 +13,8 @@ Universal checks (asked of every rewrite):
   deliverable of the request it refines.
 - **U2 owner-choices**: every choice that changes what gets built, which the user didn't settle and which can't be
   found in their files, is put to the user (a question or options), rather than decided silently. Reasonable defaults
-  for small details, marked as assumptions, pass.
+  for small details, marked as assumptions, pass. A choice the user handed over ("you decide", "if you think it's
+  best", "plan then execute") is not theirs any more: asking it again, or adding an approval stop for it, fails.
 - **U3 protect-what-works** (`na` unless the request changes something that already exists and works): the prompt
   protects it: it records a baseline or the current behaviour, changes it in steps that each leave it working, and
   checks the old main path still works at the end.
