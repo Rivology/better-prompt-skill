@@ -10,7 +10,9 @@ The loop's code and briefs are in the skill repo's `rsi/` folder (`~/better-prom
 github.com/Rivology/better-prompt-skill). Its private data is in `~/better-prompt-runs/rsi2/`. Follow
 `rsi/LOOP.md`.
 
-1. Run `git pull` in the repo. Then run `python3 rsi/loop.py harvest`. Label each unlabelled use from its session
+1. Run `git pull` in the repo. Bring in new real uses with `python3 rsi/loop.py import
+   ~/.claude/skills/better-prompt/rsi/feedback.jsonl` (the skill still logs there; already-imported uses are skipped).
+   Then run `python3 rsi/loop.py harvest`. Label each unlabelled use from its session
    transcript in `~/.claude/projects/` (when a use has no session id, find it by searching
    the transcripts for the first 80 characters of its rough prompt) with `rsi/briefs/labeler.md` (use one subagent for every 10 uses), and
    apply the labels with `loop.py label <file> --guards`.
