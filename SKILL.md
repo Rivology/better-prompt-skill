@@ -35,6 +35,10 @@ get Claude to the result they actually want. Then explain briefly what you chang
   known, use its section that is safe on all of them. For a short one-shot task (an email, an explanation, a page,
   a small fix), don't open it and change nothing.
 - **Inside a project folder?** Take a quick look (a few reads or greps) so you can name real files, commands and patterns.
+- **Tools the prompt names** (a slash command, skill, plugin, MCP server or CLI): name only tools that exist where
+  the prompt will run. In Claude Code, check before naming one (the skills list; `claude --version` against the
+  version a command needs; `which` for a CLI). Where you can't check, as on claude.ai, name a Claude Code feature
+  with "if available". A tool that would have to be installed goes in the reply as a suggestion, never as a step.
 - **Already strong** (clear goal, specifics, constraints)? Say so, keep their wording verbatim, and append only
   what's missing, usually the "Done when:" line. Skip to step 4.
 

@@ -27,6 +27,11 @@ Where each line comes from:
   leads to is not shown finished.
 - **[T]** our deploy check, 2026-11-12: a placeholder page published to GitHub Pages, checked live at phone and
   desktop size, updated, and rolled back. **[R]** gaps a blind reviewer named in this file's first drafts.
+- **[AV]** Anthropic (Addy Osmani), "How the Claude Code team thinks about verification" (claude.dev, 2026-11-16):
+  the team's own practice, with one measured number (a separate rubric grader, up to +10 points).
+- **[W]** Simon Willison: sparqlite (2026-10-16), a 12-hour run judged by 636 of 639 W3C tests; Battle Drones
+  (2026-10-20), 1,200 simulated matches cut undecided games from 14% to 0.9%. **[MIG]** Anthropic, "Migrating our
+  Messages API to Rust" (2026-11-25): about 98% of tests passed while about a quarter of production inputs matched.
 - **[O55]** our benchmark builds on Opus 5.5, 2026-11-03. **[practice]** common practice; nobody tested it here.
   **[skill]** a rule the skill already has in `SKILL.md` or `project-building.md`.
 
@@ -82,7 +87,10 @@ A project that never leaves the user's machine gets nothing from stage 3 [skill]
    task gets its check and a commit, and only a milestone gets a review and a release [R]. The task list is a file
    in the repo (`TASKS.md` or `features.json`: task, milestone, status, the check that proves it), written so that
    a new session, or another model, can build from it without the conversation [V, ENG, CC]. Use an outside tracker
-   (Notion, Linear) only if the user already works in one [V shows Notion; a file is our choice].
+   (Notion, Linear) only if the user already works in one [V shows Notion; a file is our choice]. Where a judge
+   exists outside Claude's own work, the checks use it: the old system for a rewrite (the same inputs through
+   both, outputs compared), a public test suite or standard, many simulated runs, a real measurement. Tests
+   Claude writes for its own code share its blind spots [W, MIG].
 6. **The risks of this kind of project**, each with how Claude proves it doesn't happen: `project-building.md`
    item 5, plus the release risks in stage 3 [skill].
 7. **Standing rules go in `CLAUDE.md`**, for a project of several sessions: the command that runs it, the command
@@ -104,7 +112,11 @@ A project that never leaves the user's machine gets nothing from stage 3 [skill]
     desktop size; a command-line tool runs on a realistic sample. Ask for the command and its output, or the
     screenshot, not "all tests pass" [CC]. Before each release the running product is checked, and a part that
     fails is left out [P1]. The devices named in the spec are the test targets: a number measured on the build
-    machine doesn't prove a phone, so the report says what could not be measured [R].
+    machine doesn't prove a phone, so the report says what could not be measured [R]. The way to run and check the
+    project is written down as a `verify` skill (`.claude/skills/verify/SKILL.md`; Claude Code uses it before each
+    commit, and `/verify` creates one), kept fast and reliable [AV]. A check that still fails after three rounds of
+    fixes stops that task and goes in the report instead of a fourth try; a flaky test is fixed, or deleted with
+    the reason written down, never skipped, retried or padded with waits [AV].
 12. **Fresh-eyes review at each milestone.** One reviewer that hasn't seen the code or the conversation checks
     the build against SPEC.md: "report gaps that affect correctness and skip style". Keep "skip style": a reviewer
     asked to find problems always finds something [CC]. Fix the biggest gap first.
